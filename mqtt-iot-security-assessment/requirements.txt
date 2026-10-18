@@ -1,0 +1,4 @@
+# Python dependencies for the MQTT IoT Security Assessment lab
+# Install with: pip install -r requirements.txt
+
+paho-mqtt==2.1.0      # MQTT client library used by sensors, subscriber, and attack scripts

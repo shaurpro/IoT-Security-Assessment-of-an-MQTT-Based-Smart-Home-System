@@ -1,0 +1,32 @@
+# Two broker profiles so you can switch between the insecure target and the
+# hardened remediation without touching anything else.
+#
+#   Baseline (insecure, plaintext 1883):
+#       docker compose --profile baseline up
+#
+#   Hardened (TLS + auth + ACL, 8883):   (run cert + password scripts first)
+#       docker compose --profile hardened up
+#
+# Only run one profile at a time.
+
+services:
+  broker-baseline:
+    image: eclipse-mosquitto:2
+    container_name: mqtt-baseline
+    profiles: ["baseline"]
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./config/mosquitto/baseline/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+
+  broker-hardened:
+    image: eclipse-mosquitto:2
+    container_name: mqtt-hardened
+    profiles: ["hardened"]
+    ports:
+      - "8883:8883"
+    volumes:
+      - ./config/mosquitto/hardened/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./config/mosquitto/hardened/passwordfile:/mosquitto/config/passwordfile:ro
+      - ./config/mosquitto/hardened/aclfile:/mosquitto/config/aclfile:ro
+      - ./config/mosquitto/certs:/mosquitto/certs:ro

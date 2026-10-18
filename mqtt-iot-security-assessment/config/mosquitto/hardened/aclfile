@@ -1,0 +1,28 @@
+# =============================================================================
+# Topic-level Access Control List  (least privilege)
+# -----------------------------------------------------------------------------
+# Each device identity may only touch the topics required for its role.
+# This is the control that stops the spoofing / eavesdropping PoCs.
+# =============================================================================
+
+# Temperature sensor: may ONLY publish its own reading topic.
+user sensor_temp
+topic write home/livingroom/temperature
+
+# Motion sensor: may ONLY publish its own event topic.
+user sensor_motion
+topic write home/hallway/motion
+
+# Dashboard / hub: may READ sensor topics and WRITE the thermostat command,
+# but may not impersonate a sensor by writing to the sensor topics.
+user dashboard
+topic read home/livingroom/temperature
+topic read home/hallway/motion
+topic write home/livingroom/thermostat/set
+
+# Thermostat actuator: may READ its own command topic only.
+user thermostat
+topic read home/livingroom/thermostat/set
+
+# Note: there is NO default/anonymous grant. Any identity not listed here,
+# and any topic not listed for a given user, is denied by default.

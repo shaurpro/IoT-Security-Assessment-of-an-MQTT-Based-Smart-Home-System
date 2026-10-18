@@ -1,0 +1,22 @@
+# Generated secrets — never commit
+config/mosquitto/certs/*.crt
+config/mosquitto/certs/*.key
+config/mosquitto/certs/*.csr
+config/mosquitto/certs/*.srl
+config/mosquitto/hardened/passwordfile
+
+# Captures (can be large / may contain data) — commit a sample deliberately if wanted
+*.pcap
+*.pcapng
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/

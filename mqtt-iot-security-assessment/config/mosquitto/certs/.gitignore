@@ -1,0 +1,5 @@
+# Never commit generated lab certificates / keys.
+*.crt
+*.key
+*.csr
+*.srl
